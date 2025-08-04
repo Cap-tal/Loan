@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>මුදල් ඉල්ලුම් පෝරමය</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #3498db;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
 
+<form id="loanForm">
+  <!-- Step 1 -->
+  <div class="form-step active" id="step1">
+    <h2>මුලික විස්තර</h2>
+    <label>නම:</label>
+    <input type="text" name="name" required>
+    
+    <label>ජාතික හැඳුනුම්පත් අංකය:</label>
+    <input type="text" name="nic" required>
+    
+    <label>දුරකථන අංකය:</label>
+    <input type="tel" name="phone" required>
+    
+    <label>ඔබ ලබා ගන්නා මුදල:</label>
+    <input type="number" name="amount" required>
+    
+    <label>මුදල ලබා ගැනීමට හේතුව:</label>
+    <input type="text" name="reason" required>
+
+    <hr>
+    <h3>ඇපකරු 1</h3>
+    <label>නම:</label>
+    <input type="text" name="guarantor1_name" required>
+    
+    <label>දුරකථන අංකය:</label>
+    <input type="tel" name="guarantor1_phone" required>
+    
+    <h3>ඇපකරු 2</h3>
+    <label>නම:</label>
+    <input type="text" name="guarantor2_name">
+    
+    <label>දුරකථන අංකය:</label>
+    <input type="tel" name="guarantor2_phone">
+
+    <label>ID ෆොටෝ Upload - Front:</label>
+    <input type="file" name="id_front" accept="image/*" required>
+    
+    <label>ID ෆොටෝ Upload - Back:</label>
+    <input type="file" name="id_back" accept="image/*" required>
+
+    <div class="buttons">
+      <button type="button" onclick="nextStep()">ඊළඟට</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="form-step" id="step2">
+    <h2>පිටුව පිළිබඳ තොරතුරු</h2>
+    <p>මෙම <a href="YOUR_PAGE_LINK_HERE" target="_blank">ලින්ක් එක</a> භාවිතයෙන් අපගේ ෆේස්බුක් පිටුවට ගොස් ෆලෝ කෙනෙකු වන්න.</p>
+    <p>ඔබගේ මුදල් ලබා ගැනීමට, අපේ සමාජිකයෙකු වීම අනිවාර්යයයි.</p>
+
+    <label>දැනටමත් අපේ පිටුව ෆලෝ කරලා තියෙනවාද?</label>
+    <select name="followed" required>
+      <option value="">-- තෝරන්න --</option>
+      <option value="ඔව්">ඔව්</option>
+      <option value="නැහැ">නැහැ</option>
+    </select>
+
+    <h3>ඔබගේ ගිණුම් විස්තර</h3>
+    <label>Account Name:</label>
+    <input type="text" name="account_name" required>
+
+    <label>Account Number:</label>
+    <input type="text" name="account_number" required>
+
+    <label>Bank:</label>
+    <input type="text" name="bank" required>
+
+    <label>Branch:</label>
+    <input type="text" name="branch" required>
+
+    <div class="buttons">
+      <button type="button" onclick="prevStep()">පෙරට</button>
+      <button type="submit">යොමු කරන්න</button>
+    </div>
+  </div>
+</form>
+
+<script>
+  function nextStep() {
+    document.getElementById("step1").classList.remove("active");
+    document.getElementById("step2").classList.add("active");
+  }
+
+  function prevStep() {
+    document.getElementById("step2").classList.remove("active");
+    document.getElementById("step1").classList.add("active");
+  }
+
+  document.getElementById("loanForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("පෝරමය සාර්ථකව යොමු විය!");
+    // Here you can add code to actually submit to a server
+  });
+</script>
+
+</body>
+</html>
