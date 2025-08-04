@@ -2,207 +2,85 @@
 <html lang="si">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>මුදල් ඉල්ලුම් පෝරමය</title>
+  <title>Follow Button Tooltip</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 20px;
-    }
-
-    form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h2, h3 {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .buttons {
+    .follow-container {
+      position: relative;
+      display: inline-block;
       margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
     }
 
-    button {
-      flex: 1;
-      padding: 12px;
+    .follow-button {
+      background-color: #4267B2;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
       border: none;
       border-radius: 5px;
-      background-color: #3498db;
-      color: white;
-      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #2980b9;
+    .tooltip-message {
+      visibility: hidden;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 8px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%; /* Show above the button */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      width: 240px;
+      font-size: 14px;
     }
 
-    .form-step {
-      display: none;
+    .tooltip-message::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: #333 transparent transparent transparent;
     }
 
-    .form-step.active {
-      display: block;
-    }
-
-    .warning {
-      color: red;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-      form {
-        padding: 15px;
-      }
-
-      button {
-        padding: 10px;
-        font-size: 14px;
-      }
-
-      h2, h3 {
-        font-size: 18px;
-      }
+    .follow-container.show .tooltip-message {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-<form id="loanForm">
-  <!-- Step 1 -->
-  <div class="form-step active" id="step1">
-    <h2>මුලික විස්තර</h2>
-    <label>නම:</label>
-    <input type="text" name="name" required>
+<h3>අපගේ Facebook පිටුව Follow කරන්න</h3>
 
-    <label>ජාතික හැඳුනුම්පත් අංකය:</label>
-    <input type="text" name="nic" required>
-
-    <label>දුරකථන අංකය:</label>
-    <input type="tel" name="phone" required>
-
-    <label>ඔබ ලබා ගන්නා මුදල:</label>
-    <input type="number" name="amount" required>
-
-    <label>මුදල ලබා ගැනීමට හේතුව:</label>
-    <input type="text" name="reason" required>
-
-    <h3>ඇපකරු 1</h3>
-    <label>නම:</label>
-    <input type="text" name="guarantor1_name" required>
-
-    <label>දුරකථන අංකය:</label>
-    <input type="tel" name="guarantor1_phone" required>
-
-    <h3>ඇපකරු 2</h3>
-    <label>නම:</label>
-    <input type="text" name="guarantor2_name">
-
-    <label>දුරකථන අංකය:</label>
-    <input type="tel" name="guarantor2_phone">
-
-    <label>ID ෆොටෝ Upload - Front:</label>
-    <input type="file" name="id_front" accept="image/*" required>
-
-    <label>ID ෆොටෝ Upload - Back:</label>
-    <input type="file" name="id_back" accept="image/*" required>
-
-    <div class="buttons">
-      <button type="button" onclick="nextStep()">ඊළඟට</button>
-    </div>
+<div class="follow-container" id="followContainer">
+  <div class="tooltip-message" id="tooltipMsg">
+    ඔබ අපගේ පිටුවට යාමෙන් පසු "Follow" බොත්තම ඔබන්න.
   </div>
-
-  <!-- Step 2 -->
-  <div class="form-step" id="step2">
-    <h2>පිටුව පිළිබඳ තොරතුරු</h2>
-    <p>මෙම <a href="https://www.facebook.com/share/19TU67xU5G/?mibextid=wwXIfr" target="_blank">ලින්ක් එක</a> භාවිතයෙන් අපගේ පිටුව ෆලෝ කරන්න.</p>
-    <p>ඔබගේ මුදල ලබා ගැනීමට, අපේ සමාජිකයෙකු වීම අනිවාර්යයයි.</p>
-
-    <label>දැනටමත් අපේ පිටුව ෆලෝ කරලා තියෙනවාද?</label>
-    <select name="followed" id="followedSelect" onchange="checkFollow()" required>
-      <option value="">-- තෝරන්න --</option>
-      <option value="ඔව්">ඔව්</option>
-      <option value="නැහැ">නැහැ</option>
-    </select>
-    <div class="warning" id="followWarning" style="display: none;">
-      කරුණාකර අපගේ පිටුව පළමුව ෆලෝ කරන්න!
-    </div>
-
-    <h3>ඔබගේ ගිණුම් විස්තර</h3>
-    <label>Account Name:</label>
-    <input type="text" name="account_name" required>
-
-    <label>Account Number:</label>
-    <input type="text" name="account_number" required>
-
-    <label>Bank:</label>
-    <input type="text" name="bank" required>
-
-    <label>Branch:</label>
-    <input type="text" name="branch" required>
-
-    <div class="buttons">
-      <button type="button" onclick="prevStep()">පෙරට</button>
-      <button type="submit" id="submitBtn">යොමු කරන්න</button>
-    </div>
-  </div>
-</form>
+  <button class="follow-button" onclick="goToFacebook()">📲 Follow Now</button>
+</div>
 
 <script>
-  function nextStep() {
-    document.getElementById("step1").classList.remove("active");
-    document.getElementById("step2").classList.add("active");
+  function goToFacebook() {
+    const container = document.getElementById('followContainer');
+    const tooltip = document.getElementById('tooltipMsg');
+
+    // Show tooltip
+    container.classList.add('show');
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+      container.classList.remove('show');
+      // Navigate to page
+      window.open("https://facebook.com/YOUR_PAGE_LINK", "_blank");
+    }, 2000);
   }
-
-  function prevStep() {
-    document.getElementById("step2").classList.remove("active");
-    document.getElementById("step1").classList.add("active");
-  }
-
-  function checkFollow() {
-    const followSelect = document.getElementById("followedSelect");
-    const warning = document.getElementById("followWarning");
-    const submitBtn = document.getElementById("submitBtn");
-
-    if (followSelect.value === "නැහැ") {
-      warning.style.display = "block";
-      submitBtn.disabled = true;
-    } else {
-      warning.style.display = "none";
-      submitBtn.disabled = false;
-    }
-  }
-
-  document.getElementById("loanForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    alert("පෝරමය සාර්ථකව යොමු විය! ❤");
-    // Backend/Google Sheet integration can be done here
-  });
 </script>
 
 </body>
