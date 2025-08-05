@@ -1,70 +1,87 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Follow Step</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi-Step Form with Facebook Follow</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f2f2f2;
     }
     .hidden {
       display: none;
     }
+    .form-step {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Step 1 -->
-    <div id="step1">
-      <h2>Step 1: Fill Form</h2>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <button onclick="goToStep2()">Next</button>
-    </div><!-- Step 2 -->
-<div id="step2" class="hidden">
+
+<!-- Facebook SDK -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"
+  nonce="abc123">
+</script>
+
+<!-- Step 1 -->
+<div id="step1" class="form-step">
+  <h2>Step 1: Fill Form</h2>
+  <p>Enter your name:</p>
+  <input type="text" placeholder="Your name here..." />
+  <br><br>
+  <button onclick="goToStep2()">Next</button>
+</div>
+
+<!-- Step 2 -->
+<div id="step2" class="form-step hidden">
   <h2>Step 2: Follow Us</h2>
-  <div class="fb-follow" 
-       data-href="https://www.facebook.com/YourPageNameHere" 
-       data-layout="button" 
+  <div class="fb-follow"
+       data-href="https://www.facebook.com/share/19TU67xU5G/?mibextid=wwXIfr"
+       data-layout="button"
        data-size="large">
   </div>
+  <br><br>
   <button onclick="continueForm()">Continue</button>
 </div>
 
 <!-- Final Message -->
-<div id="final" class="hidden">
+<div id="final" class="form-step hidden">
   <h2>Thank you! ✅</h2>
   <p>Your form is now complete.</p>
 </div>
 
-  </div>  <!-- Facebook SDK -->  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous"
-    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"></script>  <script>
-    function goToStep2() {
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("step2").classList.remove("hidden");
-    }
+<!-- JavaScript Logic -->
+<script>
+  function goToStep2() {
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  }
 
-    function continueForm() {
-      document.getElementById("step2").classList.add("hidden");
-      document.getElementById("final").classList.remove("hidden");
-    }
-  </script></body>
+  function continueForm() {
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('final').classList.remove('hidden');
+  }
+</script>
+
+</body>
 </html>
