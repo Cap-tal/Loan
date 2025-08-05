@@ -75,6 +75,27 @@
       border-radius: 5px;
       margin-top: 10px;
     }
+
+    video {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .success-message h2 {
+      color: green;
+      margin-bottom: 10px;
+    }
+
+    .success-message p {
+      font-size: 1.1em;
+      color: #333;
+    }
   </style>
 </head>
 <body>
@@ -137,14 +158,20 @@
         <label>Screenshot of Page Follow / ෆලෝ කිරීමේ ස්කින්ෂොට්</label>
         <input type="file" required>
 
+        <!-- 📹 Video Tutorial -->
+        <label>Follow Guide Video / ෆලෝ කරන හැටි බලන්න</label>
+        <video controls>
+          <source src="follow-guide.mp4" type="video/mp4">
+          ඔබගේ browser එක මෙම වීඩියෝව play කළ නොහැක.
+        </video>
+
         <div class="note">
           <p>🔗 <strong>Follow our Facebook Page:</strong><br>
             <a href="https://www.facebook.com/share/19TU67xU5G/?mibextid=wwXIfr" target="_blank">
               මෙතනින් පේජ් එකේ screenshot එකක් ලබාගන්න
-
             </a><br>
-            <strong>📌 සටහන:</strong>මෙතනින් පේජ් එකේ screenshot එකක් ලබාගන්න
- <b>⋯</b> තෝරා <b>"Browser එකෙන් විවෘත කරන්න"</b> තෝරන්න.
+            <strong>📌 සටහන:</strong> මෙතනින් පේජ් එකේ screenshot එකක් ලබාගන්න
+            <b>⋯</b> තෝරා <b>"Browser එකෙන් විවෘත කරන්න"</b> තෝරන්න.
           </p>
         </div>
 
@@ -195,8 +222,21 @@
 
     document.getElementById("multiStepForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      alert("Form submitted successfully!");
-      // Form submission logic here (send to server or backend)
+
+      // Show success message and hide form
+      document.querySelector(".container").innerHTML = `
+        <div class="success-message">
+          <h2>✅ ඔබගේ විස්තර සාර්ථක අනුමත වී ඇත</h2>
+          <p>📌 කරුණාකර මඳ වේලාවක් රැඳී සිටින්න...</p>
+        </div>
+      `;
+
+      // Optional: Reload or redirect after 5 seconds
+      setTimeout(() => {
+        // location.reload(); // To reload the form
+        // OR redirect to another page
+        // window.location.href = "thank-you.html";
+      }, 5000);
     });
   </script>
 
