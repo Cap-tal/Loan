@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loan Application Form</title>
+  <title>ඉල්ලීම් පෝරමය</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f0f4f8;
-      margin: 0;
-      padding: 0;
+    * {
+      box-sizing: border-box;
     }
 
-    .container {
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .form-container {
       max-width: 500px;
-      margin: auto;
-      background: white;
+      margin: 0 auto;
       padding: 20px;
-      border-radius: 10px;
-      margin-top: 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background: #ffffff;
+      min-height: 100vh;
     }
 
     h2 {
@@ -30,208 +31,144 @@
     label {
       display: block;
       margin-top: 10px;
+      font-weight: bold;
     }
 
-    input, textarea, select {
+    input, select {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 5px;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
 
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      background: #007bff;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .step {
+    .hidden {
       display: none;
     }
 
-    .step.active {
-      display: block;
-    }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    .note {
-      font-size: 0.9em;
-      background: #e0f0ff;
-      padding: 10px;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    video {
+    button {
+      margin-top: 20px;
       width: 100%;
-      margin-top: 10px;
-      border-radius: 10px;
+      padding: 12px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
     }
 
-    .success-message {
+    #success-message {
       text-align: center;
-      padding: 40px;
-    }
-
-    .success-message h2 {
+      font-size: 18px;
       color: green;
-      margin-bottom: 10px;
-    }
-
-    .success-message p {
-      font-size: 1.1em;
-      color: #333;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <form id="multiStepForm">
-
+  <div class="form-container">
+    <form id="loanForm">
       <!-- Step 1 -->
-      <div class="step active" id="step1">
-        <h2>Step 1 - Personal Info</h2>
-        <label>Full Name / සම්පූර්ණ නම</label>
+      <div id="step1">
+        <h2>1 වන පියවර</h2>
+        <label>ඔබගේ නම</label>
         <input type="text" required>
 
-        <label>NIC Number / ජාතික හැඳුනුම්පත් අංකය</label>
+        <label>නගරය</label>
         <input type="text" required>
 
-        <label>Phone Number / ඔබගේ දුරකථන අංකය</label>
-        <input type="tel" required>
+        <label>ජා.අං</label>
+        <input type="text" required>
 
-        <label>Requested Amount / ඔබ ලබා ගන්නා මුදල</label>
-        <input type="number" required>
+        <label>ලිපිනය</label>
+        <input type="text" required>
 
-        <div class="buttons">
-          <button type="button" onclick="nextStep()">Next</button>
-        </div>
+        <label>ඊමේල් ලිපිනය</label>
+        <input type="email" required>
+
+        <label>ලබාගන්නා මුදල</label>
+        <input type="text" required>
+
+        <label>ලබා ගැනීමට හේතුව</label>
+        <input type="text" required>
+
+        <hr>
+        <h3>අපකරු 01</h3>
+        <label>නම</label>
+        <input type="text" required>
+        <label>දුරකථන අංකය</label>
+        <input type="text" required>
+        <label>ID Upload</label>
+        <input type="file" accept="image/*" required>
+
+        <h3>අපකරු 02</h3>
+        <label>නම</label>
+        <input type="text">
+        <label>දුරකථන අංකය</label>
+        <input type="text">
+        <label>ID Upload</label>
+        <input type="file" accept="image/*">
+
+        <h3>අපකරු 03</h3>
+        <label>නම</label>
+        <input type="text">
+        <label>දුරකථන අංකය</label>
+        <input type="text">
+        <label>ID Upload</label>
+        <input type="file" accept="image/*">
+
+        <button type="button" onclick="nextStep(2)">ඊළඟට යන්න</button>
       </div>
 
       <!-- Step 2 -->
-      <div class="step" id="step2">
-        <h2>Step 2 - Guarantors / ඇපකරුවන්</h2>
-
-        <label>Guarantor 1 Name / නම</label>
+      <div id="step2" class="hidden">
+        <h2>2 වන පියවර</h2>
+        <label>ගිණුම් අංකය</label>
         <input type="text" required>
 
-        <label>Guarantor 1 Phone / දුරකථන අංකය</label>
-        <input type="tel" required>
-
-        <label>Guarantor 2 Name / නම</label>
+        <label>ගිණුම් හිමියාගේ නම</label>
         <input type="text" required>
 
-        <label>Guarantor 2 Phone / දුරකථන අංකය</label>
-        <input type="tel" required>
+        <label>බැංකුව</label>
+        <input type="text" required>
 
-        <div class="buttons">
-          <button type="button" onclick="prevStep()">Previous</button>
-          <button type="button" onclick="nextStep()">Next</button>
-        </div>
+        <label>ශාඛාව</label>
+        <input type="text" required>
+
+        <button type="button" onclick="nextStep(3)">ඊළඟට යන්න</button>
       </div>
 
       <!-- Step 3 -->
-      <div class="step" id="step3">
-        <h2>Step 3 - Uploads & Bank Info</h2>
+      <div id="step3" class="hidden">
+        <h2>3 වන පියවර</h2>
+        <label>ජාතික හැඳුනුම්පත - ඉදිරිපස</label>
+        <input type="file" accept="image/*" required>
 
-        <label>NIC Front / හැඳුනුම්පත ඉදිරිපස</label>
-        <input type="file" required>
+        <label>ජා.හැඳුනුම්පත - පිටුපස</label>
+        <input type="file" accept="image/*" required>
 
-        <label>NIC Back / හැඳුනුම්පත පසුපස</label>
-        <input type="file" required>
+        <label>සෙල්ෆි ඡායාරූපයක්</label>
+        <input type="file" accept="image/*" required>
 
-        <label>Screenshot of Page Follow / ෆලෝ කිරීමේ ස්කින්ෂොට්</label>
-        <input type="file" required>
-
-      <div class="note">
-          <p>🔗 <strong>Follow our Facebook Page:</strong><br>
-            <a href="https://www.facebook.com/share/19TU67xU5G/?mibextid=wwXIfr" target="_blank">
-              මෙතනින් පේජ් එකේ screenshot එකක් ලබාගන්න
-            </a><br>
-            <strong>📌 සටහන:</strong> මෙතනින් පේජ් එකේ screenshot එකක් ලබාගන්න
-            <b>⋯</b> තෝරා <b>"Browser එකෙන් විවෘත කරන්න"</b> තෝරන්න.
-          </p>
-        </div>
-
-        <label>Account Name / ගිණුමේ නම</label>
-        <input type="text" required>
-
-        <label>Account Number / ගිණුම් අංකය</label>
-        <input type="text" required>
-
-        <label>Bank / බැංකුව</label>
-        <input type="text" required>
-
-        <label>Branch / ශාඛාව</label>
-        <input type="text" required>
-
-        <div class="buttons">
-          <button type="button" onclick="prevStep()">Previous</button>
-          <button type="submit">Submit / යවන්න</button>
-        </div>
+        <button type="submit">යොමු කරන්න</button>
       </div>
-
     </form>
+
+    <div id="success-message">ඔබගේ විස්තර සාර්ථකව ලබා දී ඇත!</div>
   </div>
 
   <script>
-    let currentStep = 0;
-    const steps = document.querySelectorAll(".step");
-
-    function showStep(index) {
-      steps.forEach((step, i) => {
-        step.classList.toggle("active", i === index);
-      });
+    function nextStep(step) {
+      document.querySelectorAll("#loanForm > div").forEach(div => div.classList.add("hidden"));
+      document.getElementById("step" + step).classList.remove("hidden");
     }
 
-    function nextStep() {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        showStep(currentStep);
-      }
-    }
-
-    function prevStep() {
-      if (currentStep > 0) {
-        currentStep--;
-        showStep(currentStep);
-      }
-    }
-
-    document.getElementById("multiStepForm").addEventListener("submit", function(e) {
+    document.getElementById("loanForm").addEventListener("submit", function(e) {
       e.preventDefault();
-
-      // Show success message and hide form
-      document.querySelector(".container").innerHTML = `
-        <div class="success-message">
-          <h2>✅ ඔබගේ විස්තර සාර්ථක අනුමත වී ඇත</h2>
-          <p>📌 කරුණාකර මඳ වේලාවක් රැඳී සිටින්න...</p>
-        </div>
-      `;
-
-      // Optional: Reload or redirect after 5 seconds
-      setTimeout(() => {
-        // location.reload(); // To reload the form
-        // OR redirect to another page
-        // window.location.href = "thank-you.html";
-      }, 5000);
+      document.getElementById("loanForm").style.display = "none";
+      document.getElementById("success-message").style.display = "block";
     });
   </script>
-
 </body>
 </html>
