@@ -148,10 +148,7 @@
       <option value="no">නැහැ</option>
     </select>
 
-    <div id="notMemberMessage" class="warning" style="display: none;">
-      කරුණාකර මෙම ලින්ක් එකෙන් ගිහිල්ල අපේ සාමාජිකයෙක් වෙන්න...<br>
-      <strong>Like</strong> සහ <strong>Follow</strong> කරන්න. ඒකෙන් ඔබට අපගේ නවතම ඇප් පිළිබඳ දැනගන්න පුළුවන්.
-    </div>
+    <div id="notMemberMessage" class="warning" style="display: none;"></div>
 
     <h3>ඔබගේ ගිණුම් විස්තර</h3>
     <label>Account Name:</label>
@@ -190,14 +187,19 @@
 
   membershipSelect.addEventListener("change", function () {
     if (membershipSelect.value === "yes") {
-      notMemberMessage.style.display = "none";
-      submitBtn.disabled = false;
+      notMemberMessage.style.display = "block";
+      notMemberMessage.textContent = "ඔබ අපේ සාමාජිකයෙක් වෙලා නැත..කරුණාකර 'නැහැ' යනුවෙන් සඳහන් කරන්න";
+      submitBtn.disabled = true;
     } else if (membershipSelect.value === "no") {
       notMemberMessage.style.display = "block";
+      notMemberMessage.innerHTML = `
+        කරුණාකර මෙම ලින්ක් එකෙන් ගිහිල්ල අපේ සාමාජිකයෙක් වෙන්න...<br>
+        <strong>Like</strong> සහ <strong>Follow</strong> කරන්න. ඒකෙන් ඔබට අපගේ නවතම ඇප් පිළිබඳ දැනගන්න පුළුවන්.
+      `;
       submitBtn.disabled = true;
 
       setTimeout(() => {
-        window.location.href = "https://facebook.com/YOUR_PAGE_LINK_HERE"; // <-- ඔබේ පිටුවේ සත්‍ය URL එක මෙතනට දාන්න
+        window.location.href = "https://facebook.com/YOUR_PAGE_LINK_HERE"; // <-- මෙතන ඔබේ පිටුවේ සත්‍ය ලින්ක් එක දාන්න
       }, 2000);
     } else {
       notMemberMessage.style.display = "none";
